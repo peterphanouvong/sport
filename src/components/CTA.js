@@ -1,6 +1,6 @@
-import { Link as ChakraLink, Button } from '@chakra-ui/react'
+import { Link as ChakraLink, Button } from "@chakra-ui/react";
 
-import { Container } from './Container'
+import { Container } from "./Container";
 
 export const CTA = () => (
   <Container
@@ -24,8 +24,8 @@ export const CTA = () => (
       mx={2}
     >
       <Button width="100%" bgGradient="linear(to-tr, teal.300,yellow.400)">
-        View Repo
+        View Repo d
       </Button>
     </ChakraLink>
   </Container>
-)
+);
