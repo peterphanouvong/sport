@@ -86,10 +86,6 @@ const Register: React.FC<Props> = ({}) => {
                   </Button>
                 </NextLink>
               </VStack>
-
-              <Link color="orange.400">
-                <NextLink href="/forgot-password">Forgot password?</NextLink>
-              </Link>
             </VStack>
           </Form>
         )}
@@ -98,4 +94,4 @@ const Register: React.FC<Props> = ({}) => {
   );
 };
 
-export default withUrqlClient(createUrqlClient, { ssr: true })(Register);
+export default withUrqlClient(createUrqlClient)(Register);

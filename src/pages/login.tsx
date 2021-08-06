@@ -7,6 +7,7 @@ import {
   Divider,
   Heading,
   HStack,
+  Link,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -49,15 +50,24 @@ const Login: React.FC<Props> = ({}) => {
             <VStack spacing={4} align="stretch">
               <InputField
                 name="usernameOrEmail"
-                label="Username/Email"
+                label="Username or Email"
                 placeholder="username or email"
               />
-              <InputField
-                name="password"
-                label="Password"
-                type="password"
-                placeholder="password"
-              />
+              <VStack spacing={1} alignItems="start">
+                <InputField
+                  name="password"
+                  label="Password"
+                  type="password"
+                  placeholder="password"
+                />
+
+                <NextLink href="/forgot-password">
+                  <Link fontSize="sm" colorScheme="orange">
+                    Forgot password?
+                  </Link>
+                </NextLink>
+              </VStack>
+
               <VStack align="stretch">
                 <Button
                   colorScheme="orange"
@@ -90,4 +100,4 @@ const Login: React.FC<Props> = ({}) => {
   );
 };
 
-export default withUrqlClient(createUrqlClient, { ssr: true })(Login);
+export default withUrqlClient(createUrqlClient)(Login);
