@@ -1,7 +1,15 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { Formik, Form } from "formik";
-import { Button, Heading, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Divider,
+  Heading,
+  HStack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 
 import { Wrapper } from "../components/Wrapper";
@@ -9,6 +17,7 @@ import { InputField } from "../components/InputField";
 import { toErrorMap } from "../utils/toErrorMap";
 import { useLoginMutation } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
+import NextLink from "next/link";
 
 interface Props {}
 
@@ -49,13 +58,30 @@ const Login: React.FC<Props> = ({}) => {
                 type="password"
                 placeholder="password"
               />
-              <Button
-                colorScheme="blue"
-                isLoading={props.isSubmitting}
-                type="submit"
-              >
-                Log in
-              </Button>
+              <VStack align="stretch">
+                <Button
+                  colorScheme="orange"
+                  isLoading={props.isSubmitting}
+                  type="submit"
+                  width=""
+                >
+                  Log in
+                </Button>
+                <HStack
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Divider orientation="horizontal" />
+                  <Text color="gray.400">or</Text>
+                  <Divider orientation="horizontal" />
+                </HStack>
+                <NextLink href="/register">
+                  <Button colorScheme="orange" variant="outline">
+                    Register
+                  </Button>
+                </NextLink>
+              </VStack>
             </VStack>
           </Form>
         )}
