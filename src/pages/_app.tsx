@@ -1,5 +1,5 @@
 import { withUrqlClient } from "next-urql";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Container } from "@chakra-ui/react";
 
 import { Navbar } from "../components/Navbar";
 import { createUrqlClient } from "../utils/createUrqlClient";
@@ -9,7 +9,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme} resetCSS>
       <Navbar />
-      <Component {...pageProps} />
+      <Container maxW="container.xl">
+        <Component {...pageProps} />
+      </Container>
     </ChakraProvider>
   );
 }

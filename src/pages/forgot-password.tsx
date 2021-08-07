@@ -10,14 +10,13 @@ import {
   AlertDescription,
   Link,
   Box,
-  HStack,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { InputField } from "../components/InputField";
 import { Wrapper } from "../components/Wrapper";
 import { useForgotPasswordMutation } from "../generated/graphql";
 import NextLink from "next/link";
-import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 
 interface Props {}
 
@@ -67,7 +66,6 @@ const ForgotPassword: React.FC<Props> = ({}) => {
                   colorScheme="orange"
                   isLoading={props.isSubmitting}
                   type="submit"
-                  width=""
                 >
                   Send email
                 </Button>
