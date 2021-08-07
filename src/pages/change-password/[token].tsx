@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { NextComponentType, withUrqlClient } from "next-urql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 
-const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
+const ChangePassword: NextPage<{ token: string }> = () => {
   const router = useRouter();
   const [, changePassword] = useChangePasswordMutation();
 
@@ -36,7 +36,8 @@ const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
 
           const res = await changePassword({
             newPassword: values.newPassword,
-            token,
+            token:
+              typeof router.query.token === "string" ? router.query.token : "",
           });
 
           if (res.data?.changePassword.errors) {
@@ -79,12 +80,6 @@ const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
       </Formik>
     </Wrapper>
   );
-};
-
-ChangePassword.getInitialProps = ({ query }) => {
-  return {
-    token: query.token as string,
-  };
 };
 
 export default withUrqlClient(createUrqlClient)(
