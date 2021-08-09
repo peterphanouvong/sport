@@ -12,13 +12,11 @@ interface Props {}
 const Navbar: React.FC<Props> = ({}) => {
   const { colorMode } = useColorMode();
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
-  const [{ data, fetching }] = useMeQuery({
-    pause: isServer(),
-  });
+  const [{ data, fetching }] = useMeQuery({});
 
   let body = null;
 
-  //data loading
+  //data loading d
   if (fetching) {
     // user not logged in
   } else if (!data?.me) {
