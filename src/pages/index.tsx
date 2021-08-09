@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Grid, Heading, Text, VStack } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 
-import Card from "../components/Card";
+import { Card } from "../components/Card";
 import CreatePost from "../components/CreatePost";
 import { useMeQuery, usePostsQuery } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";

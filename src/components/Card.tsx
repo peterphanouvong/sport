@@ -17,4 +17,4 @@ const Card: React.FC<Props> = ({ children }) => {
   );
 };
 
-export default Card;
+export { Card };

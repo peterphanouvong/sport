@@ -3,7 +3,6 @@ import NextLink from "next/link";
 import { Box, Button, HStack, Link, useColorMode } from "@chakra-ui/react";
 
 import Logo from "./Logo";
-import { isServer } from "../utils/isServer";
 import { useLogoutMutation, useMeQuery } from "../generated/graphql";
 import SettingsDrawer from "./SettingsDrawer";
 

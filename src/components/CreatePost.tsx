@@ -16,7 +16,7 @@ import { withUrqlClient } from "next-urql";
 import React from "react";
 import { useCreatePostMutation } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
-import Card from "./Card";
+import { Card } from "./Card";
 import { InputField } from "./InputField";
 import { TextareaField } from "./TextareaField";
 
