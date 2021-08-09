@@ -56,11 +56,19 @@ const Navbar: React.FC<Props> = ({}) => {
   return (
     <Box
       paddingX={16}
-      paddingY={8}
+      paddingY={2}
       display="flex"
       justifyContent="space-between"
+      borderBottomColor="gray.200"
+      boxShadow="sm"
+      borderBottomWidth="1px"
+      mb={8}
+      position="sticky"
+      top={0}
+      bg="rgba(255,255,255, 0.95)"
+      zIndex="10"
     >
-      <NextLink href="/">
+      <NextLink href="/home">
         <a>
           <Logo color={colorMode === "dark" ? "white" : "black"} />
         </a>
