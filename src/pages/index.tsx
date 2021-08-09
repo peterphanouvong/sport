@@ -1,12 +1,21 @@
 import React, { useState } from "react";
-import { Button, Grid, Heading, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Grid,
+  Heading,
+  Link,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 
 import { Card } from "../components/Card";
 import CreatePost from "../components/CreatePost";
 import { useMeQuery, usePostsQuery } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
-import Layout from "../components/Layout";
+import { Layout } from "../components/Layout";
+import NextLink from "next/link";
 
 const Index = () => {
   const [variables, setVariables] = useState({
@@ -32,10 +41,17 @@ const Index = () => {
           ) : (
             data.posts.posts.map((post) => (
               <Card key={post.id}>
-                <Heading as="h2" fontSize="lg" mb={4}>
-                  {post.title}
-                </Heading>
-                <Text>{post.descriptionSnippet}</Text>
+                <Box mb={2}>
+                  <Heading as="h2" fontSize="lg">
+                    <NextLink href={`/post/[id]`} as={`/post/${post.id}`}>
+                      <Link>{post.title}</Link>
+                    </NextLink>
+                  </Heading>
+                  <Text fontSize="sm" color="gray">
+                    posted by {post.creator.username}
+                  </Text>
+                </Box>
+                <Text>{post.descriptionSnippet}...</Text>
                 {/* <Text>{post.</Text> */}
               </Card>
             ))
