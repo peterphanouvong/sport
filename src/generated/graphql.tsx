@@ -202,14 +202,14 @@ export type CreateEventMutationVariables = Exact<{
 }>;
 
 
-export type CreateEventMutation = { __typename?: 'Mutation', createEvent: { __typename?: 'Event', id: number } };
+export type CreateEventMutation = { __typename?: 'Mutation', createEvent: { __typename?: 'Event', id: number, title: string, description: string, location: string, hostId: number, createdAt: string, updatedAt: string, points: number, datetime: string, host: { __typename?: 'User', id: number, username: string, email: string, createdAt: string, updatedAt: string } } };
 
 export type CreatePostMutationVariables = Exact<{
   input: PostInput;
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', id: number, title: string, description: string, creatorId: number, points: number, createdAt: string, updatedAt: string } };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', id: number, description: string, title: string, creatorId: number, createdAt: string, points: number, updatedAt: string, descriptionSnippet: string, creator: { __typename?: 'User', id: number, username: string, email: string, createdAt: string, updatedAt: string } } };
 
 export type DeletePostMutationVariables = Exact<{
   id: Scalars['Float'];
@@ -260,7 +260,7 @@ export type PostQueryVariables = Exact<{
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post?: Maybe<{ __typename?: 'Post', id: number, title: string, description: string, creatorId: number, points: number, createdAt: string, updatedAt: string, descriptionSnippet: string, creator: { __typename?: 'User', username: string, id: number, email: string, createdAt: string, updatedAt: string } }> };
+export type PostQuery = { __typename?: 'Query', post?: Maybe<{ __typename?: 'Post', id: number, description: string, title: string, creatorId: number, createdAt: string, points: number, updatedAt: string, descriptionSnippet: string, creator: { __typename?: 'User', id: number, username: string, email: string, createdAt: string, updatedAt: string } }> };
 
 export type PostsQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -309,6 +309,21 @@ export const CreateEventDocument = gql`
     mutation CreateEvent($input: EventInput!) {
   createEvent(input: $input) {
     id
+    title
+    description
+    location
+    hostId
+    createdAt
+    updatedAt
+    points
+    datetime
+    host {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+    }
   }
 }
     `;
@@ -320,12 +335,20 @@ export const CreatePostDocument = gql`
     mutation CreatePost($input: PostInput!) {
   createPost(input: $input) {
     id
-    title
     description
+    title
+    creator {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+    }
     creatorId
-    points
     createdAt
+    points
     updatedAt
+    descriptionSnippet
   }
 }
     `;
@@ -425,20 +448,20 @@ export const PostDocument = gql`
     query Post($id: Int!) {
   post(id: $id) {
     id
-    title
     description
-    creatorId
-    points
-    createdAt
-    updatedAt
-    descriptionSnippet
+    title
     creator {
-      username
       id
+      username
       email
       createdAt
       updatedAt
     }
+    creatorId
+    createdAt
+    points
+    updatedAt
+    descriptionSnippet
   }
 }
     `;

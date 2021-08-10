@@ -4,12 +4,16 @@ import {
   dedupExchange,
   Exchange,
   fetchExchange,
+  gql,
   stringifyVariables,
 } from "urql";
 import { pipe, tap } from "wonka";
 import {
+  CreateEventMutation,
   CreatePostMutation,
   DeletePostMutationVariables,
+  EventsDocument,
+  EventsQuery,
   LoginMutation,
   LogoutMutation,
   MeDocument,
@@ -101,26 +105,6 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
         },
         updates: {
           Mutation: {
-            // createPost: (_result, args, cache, info) => {
-            //   betterUpdateQuery<CreatePostMutation, PostsQuery>(
-            //     cache,
-            //   {query: PostsDocument},
-            //   _result,
-            //   (result, query) => {
-            //     if (result.) {
-            //       return query;
-            //     } else {
-            //       return {
-            //         me: result.login.user,
-            //       };
-            //     }
-            //   }
-            //   )
-            //   cache.updateQuery({query: PostsDocument}, data => {
-            //     data.push(_result.createPost)
-            //     return
-            //   })
-            // }
             deletePost: (_result, args, cache, info) => {
               cache.invalidate({
                 __typename: "Post",
@@ -141,6 +125,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                 { query: MeDocument },
                 _result,
                 (result, query) => {
+                  console.log(query);
                   if (result.login.errors) {
                     return query;
                   } else {

@@ -17,9 +17,11 @@ import { useCreateEventMutation } from "../generated/graphql";
 import { InputField } from "./InputField";
 import { TextareaField } from "./TextareaField";
 
-interface Props {}
+interface Props {
+  addEvent: (e: any) => void;
+}
 
-const CreateEvent: React.FC<Props> = ({}) => {
+const CreateEvent: React.FC<Props> = ({ addEvent }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // const [, createPost] = useCreatePostMutation();
   const [, createEvent] = useCreateEventMutation();
@@ -51,8 +53,10 @@ const CreateEvent: React.FC<Props> = ({}) => {
             }}
             onSubmit={async (values) => {
               console.log(values);
-              const { error } = await createEvent({ input: values });
+              const { error, data } = await createEvent({ input: values });
+
               if (!error) {
+                addEvent(data.createEvent);
                 onClose();
               }
             }}

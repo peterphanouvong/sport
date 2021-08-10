@@ -1,19 +1,19 @@
 query Post($id: Int!) {
   post(id: $id) {
     id
-    title
     description
-    creatorId
-    points
-    createdAt
-    updatedAt
-    descriptionSnippet
+    title
     creator {
-      username
       id
+      username
       email
       createdAt
       updatedAt
     }
+    creatorId
+    createdAt
+    points
+    updatedAt
+    descriptionSnippet
   }
 }

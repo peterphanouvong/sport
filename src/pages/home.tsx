@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { withUrqlClient } from "next-urql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { Layout } from "../components/Layout";
@@ -13,20 +13,34 @@ const Home: React.FC<Props> = ({}) => {
   const [{ data, fetching }] = useEventsQuery();
   const [{ data: meData }] = useMeQuery();
 
-  if (!fetching && !data) {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    if (data) setEvents(data.events);
+  }, [data]);
+
+  const addEvent = (e) => {
+    setEvents([e, ...events]);
+  };
+
+  const removeEvent = (id) => {
+    setEvents(events.filter((e) => e.id !== id));
+  };
+
+  if (!fetching && !events) {
     return <div>No data...</div>;
   }
 
-  if (!data) {
+  if (!events) {
     return <Spinner />;
   }
 
   return (
     <Layout>
-      {meData?.me && <CreateEvent />}
+      {meData?.me && <CreateEvent addEvent={addEvent} />}
       <Box mt={4} />
       <VStack spacing={4} align="stretch">
-        {data.events.map((e) => {
+        {events.map((e) => {
           return (
             <Card key={e.id}>
               <Heading>{e.title}</Heading>

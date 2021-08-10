@@ -58,6 +58,7 @@ const CreatePost: React.FC<Props> = () => {
             onSubmit={async (values) => {
               console.log(values);
               const { error } = await createPost({ input: values });
+              console.log(error);
               if (!error) {
                 onClose();
               }

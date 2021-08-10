@@ -4,11 +4,8 @@ query Events {
     title
     description
     location
-    hostId
-    createdAt
-    updatedAt
-    points
     datetime
+    hostId
     host {
       id
       username
@@ -16,5 +13,8 @@ query Events {
       createdAt
       updatedAt
     }
+    points
+    createdAt
+    updatedAt
   }
 }
