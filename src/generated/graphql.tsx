@@ -20,6 +20,7 @@ export type Event = {
   title: Scalars['String'];
   description: Scalars['String'];
   location: Scalars['String'];
+  datetime: Scalars['String'];
   hostId: Scalars['Float'];
   host: User;
   points: Scalars['Float'];
@@ -31,6 +32,7 @@ export type EventInput = {
   title: Scalars['String'];
   description: Scalars['String'];
   location: Scalars['String'];
+  datetime: Scalars['String'];
 };
 
 export type FieldError = {
@@ -195,6 +197,13 @@ export type ChangePasswordMutationVariables = Exact<{
 
 export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', message: string, field: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, email: string }> } };
 
+export type CreateEventMutationVariables = Exact<{
+  input: EventInput;
+}>;
+
+
+export type CreateEventMutation = { __typename?: 'Mutation', createEvent: { __typename?: 'Event', id: number } };
+
 export type CreatePostMutationVariables = Exact<{
   input: PostInput;
 }>;
@@ -239,7 +248,7 @@ export type RegisterMutation = { __typename?: 'Mutation', register: { __typename
 export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EventsQuery = { __typename?: 'Query', events: Array<{ __typename?: 'Event', id: number, title: string, description: string, location: string, hostId: number, createdAt: string, updatedAt: string, points: number, host: { __typename?: 'User', id: number, username: string, email: string, createdAt: string, updatedAt: string } }> };
+export type EventsQuery = { __typename?: 'Query', events: Array<{ __typename?: 'Event', id: number, title: string, description: string, location: string, hostId: number, createdAt: string, updatedAt: string, points: number, datetime: string, host: { __typename?: 'User', id: number, username: string, email: string, createdAt: string, updatedAt: string } }> };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -295,6 +304,17 @@ export const ChangePasswordDocument = gql`
 
 export function useChangePasswordMutation() {
   return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument);
+};
+export const CreateEventDocument = gql`
+    mutation CreateEvent($input: EventInput!) {
+  createEvent(input: $input) {
+    id
+  }
+}
+    `;
+
+export function useCreateEventMutation() {
+  return Urql.useMutation<CreateEventMutation, CreateEventMutationVariables>(CreateEventDocument);
 };
 export const CreatePostDocument = gql`
     mutation CreatePost($input: PostInput!) {
@@ -373,6 +393,7 @@ export const EventsDocument = gql`
     createdAt
     updatedAt
     points
+    datetime
     host {
       id
       username

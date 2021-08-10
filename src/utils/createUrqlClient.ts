@@ -8,11 +8,14 @@ import {
 } from "urql";
 import { pipe, tap } from "wonka";
 import {
+  CreatePostMutation,
   DeletePostMutationVariables,
   LoginMutation,
   LogoutMutation,
   MeDocument,
   MeQuery,
+  PostsDocument,
+  PostsQuery,
   RegisterMutation,
 } from "../generated/graphql";
 import { betterUpdateQuery } from "./betterUpdateQuery";
@@ -98,6 +101,26 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
         },
         updates: {
           Mutation: {
+            // createPost: (_result, args, cache, info) => {
+            //   betterUpdateQuery<CreatePostMutation, PostsQuery>(
+            //     cache,
+            //   {query: PostsDocument},
+            //   _result,
+            //   (result, query) => {
+            //     if (result.) {
+            //       return query;
+            //     } else {
+            //       return {
+            //         me: result.login.user,
+            //       };
+            //     }
+            //   }
+            //   )
+            //   cache.updateQuery({query: PostsDocument}, data => {
+            //     data.push(_result.createPost)
+            //     return
+            //   })
+            // }
             deletePost: (_result, args, cache, info) => {
               cache.invalidate({
                 __typename: "Post",

@@ -8,6 +8,7 @@ query Events {
     createdAt
     updatedAt
     points
+    datetime
     host {
       id
       username
