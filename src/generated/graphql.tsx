@@ -202,7 +202,7 @@ export type CreateEventMutationVariables = Exact<{
 }>;
 
 
-export type CreateEventMutation = { __typename?: 'Mutation', createEvent: { __typename?: 'Event', id: number, title: string, description: string, location: string, hostId: number, createdAt: string, updatedAt: string, points: number, datetime: string, host: { __typename?: 'User', id: number, username: string, email: string, createdAt: string, updatedAt: string } } };
+export type CreateEventMutation = { __typename?: 'Mutation', createEvent: { __typename?: 'Event', id: number, title: string, description: string, location: string, datetime: string, hostId: number, points: number, createdAt: string, updatedAt: string, host: { __typename?: 'User', id: number, username: string, email: string, createdAt: string, updatedAt: string } } };
 
 export type CreatePostMutationVariables = Exact<{
   input: PostInput;
@@ -210,6 +210,13 @@ export type CreatePostMutationVariables = Exact<{
 
 
 export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', id: number, description: string, title: string, creatorId: number, createdAt: string, points: number, updatedAt: string, descriptionSnippet: string, creator: { __typename?: 'User', id: number, username: string, email: string, createdAt: string, updatedAt: string } } };
+
+export type DeleteEventMutationVariables = Exact<{
+  id: Scalars['Float'];
+}>;
+
+
+export type DeleteEventMutation = { __typename?: 'Mutation', deleteEvent: boolean };
 
 export type DeletePostMutationVariables = Exact<{
   id: Scalars['Float'];
@@ -248,7 +255,7 @@ export type RegisterMutation = { __typename?: 'Mutation', register: { __typename
 export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EventsQuery = { __typename?: 'Query', events: Array<{ __typename?: 'Event', id: number, title: string, description: string, location: string, hostId: number, createdAt: string, updatedAt: string, points: number, datetime: string, host: { __typename?: 'User', id: number, username: string, email: string, createdAt: string, updatedAt: string } }> };
+export type EventsQuery = { __typename?: 'Query', events: Array<{ __typename?: 'Event', id: number, title: string, description: string, location: string, datetime: string, hostId: number, points: number, createdAt: string, updatedAt: string, host: { __typename?: 'User', id: number, username: string, email: string, createdAt: string, updatedAt: string } }> };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -312,11 +319,8 @@ export const CreateEventDocument = gql`
     title
     description
     location
-    hostId
-    createdAt
-    updatedAt
-    points
     datetime
+    hostId
     host {
       id
       username
@@ -324,6 +328,9 @@ export const CreateEventDocument = gql`
       createdAt
       updatedAt
     }
+    points
+    createdAt
+    updatedAt
   }
 }
     `;
@@ -355,6 +362,15 @@ export const CreatePostDocument = gql`
 
 export function useCreatePostMutation() {
   return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument);
+};
+export const DeleteEventDocument = gql`
+    mutation DeleteEvent($id: Float!) {
+  deleteEvent(id: $id)
+}
+    `;
+
+export function useDeleteEventMutation() {
+  return Urql.useMutation<DeleteEventMutation, DeleteEventMutationVariables>(DeleteEventDocument);
 };
 export const DeletePostDocument = gql`
     mutation DeletePost($id: Float!) {
@@ -412,11 +428,8 @@ export const EventsDocument = gql`
     title
     description
     location
-    hostId
-    createdAt
-    updatedAt
-    points
     datetime
+    hostId
     host {
       id
       username
@@ -424,6 +437,9 @@ export const EventsDocument = gql`
       createdAt
       updatedAt
     }
+    points
+    createdAt
+    updatedAt
   }
 }
     `;
