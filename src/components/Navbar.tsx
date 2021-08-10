@@ -65,7 +65,7 @@ const Navbar: React.FC<Props> = ({}) => {
       mb={8}
       position="sticky"
       top={0}
-      bg="rgba(255,255,255, 0.95)"
+      // bg="rgba(255,255,255, 0.95)"
       zIndex="10"
     >
       <NextLink href="/home">

@@ -14,6 +14,25 @@ export type Scalars = {
   Float: number;
 };
 
+export type Event = {
+  __typename?: 'Event';
+  id: Scalars['Int'];
+  title: Scalars['String'];
+  description: Scalars['String'];
+  location: Scalars['String'];
+  hostId: Scalars['Float'];
+  host: User;
+  points: Scalars['Float'];
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
+};
+
+export type EventInput = {
+  title: Scalars['String'];
+  description: Scalars['String'];
+  location: Scalars['String'];
+};
+
 export type FieldError = {
   __typename?: 'FieldError';
   field: Scalars['String'];
@@ -30,6 +49,9 @@ export type Mutation = {
   register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
+  createEvent: Event;
+  updateEvent?: Maybe<Event>;
+  deleteEvent: Scalars['Boolean'];
 };
 
 
@@ -70,6 +92,22 @@ export type MutationLoginArgs = {
   usernameOrEmail: Scalars['String'];
 };
 
+
+export type MutationCreateEventArgs = {
+  input: EventInput;
+};
+
+
+export type MutationUpdateEventArgs = {
+  title: Scalars['String'];
+  id: Scalars['Float'];
+};
+
+
+export type MutationDeleteEventArgs = {
+  id: Scalars['Float'];
+};
+
 export type PaginatedPosts = {
   __typename?: 'PaginatedPosts';
   posts: Array<Post>;
@@ -100,6 +138,8 @@ export type Query = {
   posts: PaginatedPosts;
   post?: Maybe<Post>;
   me?: Maybe<User>;
+  events: Array<Event>;
+  event?: Maybe<Event>;
 };
 
 
@@ -113,12 +153,18 @@ export type QueryPostArgs = {
   id: Scalars['Int'];
 };
 
+
+export type QueryEventArgs = {
+  id: Scalars['Int'];
+};
+
 export type User = {
   __typename?: 'User';
   id: Scalars['Int'];
   username: Scalars['String'];
   email: Scalars['String'];
   posts: Post;
+  events: Event;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
 };
@@ -189,6 +235,11 @@ export type RegisterMutationVariables = Exact<{
 
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', message: string, field: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, email: string }> } };
+
+export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EventsQuery = { __typename?: 'Query', events: Array<{ __typename?: 'Event', id: number, title: string, description: string, location: string, hostId: number, createdAt: string, updatedAt: string, points: number, host: { __typename?: 'User', id: number, username: string, email: string, createdAt: string, updatedAt: string } }> };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -310,6 +361,31 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const EventsDocument = gql`
+    query Events {
+  events {
+    id
+    title
+    description
+    location
+    hostId
+    createdAt
+    updatedAt
+    points
+    host {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+    }
+  }
+}
+    `;
+
+export function useEventsQuery(options: Omit<Urql.UseQueryArgs<EventsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<EventsQuery>({ query: EventsDocument, ...options });
 };
 export const MeDocument = gql`
     query Me {

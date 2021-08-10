@@ -1,0 +1,19 @@
+query Events {
+  events {
+    id
+    title
+    description
+    location
+    hostId
+    createdAt
+    updatedAt
+    points
+    host {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+    }
+  }
+}
