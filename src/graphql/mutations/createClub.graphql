@@ -1,0 +1,10 @@
+mutation CreateClub($input: ClubInput!) {
+  createClub(input: $input) {
+    name
+    email
+    description
+    id
+    createdAt
+    updatedAt
+  }
+}

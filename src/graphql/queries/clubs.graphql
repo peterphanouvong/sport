@@ -1,0 +1,10 @@
+query Clubs {
+  clubs {
+    name
+    email
+    description
+    id
+    createdAt
+    updatedAt
+  }
+}

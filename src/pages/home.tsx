@@ -5,6 +5,7 @@ import { Layout } from "../components/Layout";
 import { useEventsQuery } from "../generated/graphql";
 import { Card } from "../components/Card";
 import { Heading, Spinner, Text } from "@chakra-ui/react";
+// import CreateClub from "../components/CreateClub";
 
 interface Props {}
 
@@ -31,6 +32,7 @@ const Home: React.FC<Props> = ({}) => {
           </Card>
         );
       })}
+      {/* <CreateClub /> */}
     </Layout>
   );
 };
