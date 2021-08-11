@@ -3,8 +3,7 @@ import { withUrqlClient } from "next-urql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { Layout } from "../components/Layout";
 import { useEventsQuery, useMeQuery } from "../generated/graphql";
-import { Card } from "../components/Card";
-import { Box, Heading, Spinner, Text, VStack } from "@chakra-ui/react";
+import { Box, Spinner, VStack } from "@chakra-ui/react";
 import { CreateEvent } from "../components/CreateEvent";
 import { EventCard } from "../components/EventCard";
 
@@ -42,18 +41,7 @@ const Home: React.FC<Props> = ({}) => {
       <Box mt={4} />
       <VStack spacing={4} align="stretch">
         {events.map((e) => {
-          return (
-            <EventCard
-              key={e.id}
-              title={e.title}
-              description={e.description}
-              location={e.location}
-              hostUsername={e.host.username}
-              time={new Date(parseInt(e.datetime)).toLocaleString()}
-              id={e.id}
-              removeEvent={removeEvent}
-            />
-          );
+          return <EventCard key={e.id} event={e} removeEvent={removeEvent} />;
         })}
       </VStack>
     </Layout>

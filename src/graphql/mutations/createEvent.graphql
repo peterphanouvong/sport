@@ -1,20 +1,5 @@
 mutation CreateEvent($input: EventInput!) {
   createEvent(input: $input) {
-    id
-    title
-    description
-    location
-    datetime
-    hostId
-    host {
-      id
-      username
-      email
-      createdAt
-      updatedAt
-    }
-    points
-    createdAt
-    updatedAt
+    ...RegularEvent
   }
 }
