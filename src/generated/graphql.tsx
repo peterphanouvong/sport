@@ -101,7 +101,7 @@ export type MutationCreateEventArgs = {
 
 
 export type MutationUpdateEventArgs = {
-  title: Scalars['String'];
+  input: EventInput;
   id: Scalars['Float'];
 };
 
@@ -185,6 +185,8 @@ export type UsernamePasswordInput = {
 
 export type RegularErrorFragment = { __typename?: 'FieldError', message: string, field: string };
 
+export type RegularEventFragment = { __typename?: 'Event', id: number, title: string, description: string, location: string, datetime: string, hostId: number, points: number, createdAt: string, updatedAt: string, host: { __typename?: 'User', id: number, username: string, email: string, createdAt: string, updatedAt: string } };
+
 export type RegularUserFragment = { __typename?: 'User', id: number, username: string, email: string };
 
 export type RegularUserResponseFragment = { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', message: string, field: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, email: string }> };
@@ -252,6 +254,14 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', message: string, field: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, email: string }> } };
 
+export type UpdateEventMutationVariables = Exact<{
+  input: EventInput;
+  id: Scalars['Float'];
+}>;
+
+
+export type UpdateEventMutation = { __typename?: 'Mutation', updateEvent?: Maybe<{ __typename?: 'Event', id: number, title: string, description: string, location: string, datetime: string, hostId: number, points: number, createdAt: string, updatedAt: string, host: { __typename?: 'User', id: number, username: string, email: string, createdAt: string, updatedAt: string } }> };
+
 export type EventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -277,6 +287,26 @@ export type PostsQueryVariables = Exact<{
 
 export type PostsQuery = { __typename?: 'Query', posts: { __typename?: 'PaginatedPosts', hasMore: boolean, posts: Array<{ __typename?: 'Post', id: number, description: string, title: string, creatorId: number, createdAt: string, points: number, updatedAt: string, descriptionSnippet: string, creator: { __typename?: 'User', id: number, username: string, email: string, createdAt: string, updatedAt: string } }> } };
 
+export const RegularEventFragmentDoc = gql`
+    fragment RegularEvent on Event {
+  id
+  title
+  description
+  location
+  datetime
+  hostId
+  host {
+    id
+    username
+    email
+    createdAt
+    updatedAt
+  }
+  points
+  createdAt
+  updatedAt
+}
+    `;
 export const RegularErrorFragmentDoc = gql`
     fragment RegularError on FieldError {
   message
@@ -315,25 +345,10 @@ export function useChangePasswordMutation() {
 export const CreateEventDocument = gql`
     mutation CreateEvent($input: EventInput!) {
   createEvent(input: $input) {
-    id
-    title
-    description
-    location
-    datetime
-    hostId
-    host {
-      id
-      username
-      email
-      createdAt
-      updatedAt
-    }
-    points
-    createdAt
-    updatedAt
+    ...RegularEvent
   }
 }
-    `;
+    ${RegularEventFragmentDoc}`;
 
 export function useCreateEventMutation() {
   return Urql.useMutation<CreateEventMutation, CreateEventMutationVariables>(CreateEventDocument);
@@ -421,28 +436,24 @@ export const RegisterDocument = gql`
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
 };
+export const UpdateEventDocument = gql`
+    mutation UpdateEvent($input: EventInput!, $id: Float!) {
+  updateEvent(input: $input, id: $id) {
+    ...RegularEvent
+  }
+}
+    ${RegularEventFragmentDoc}`;
+
+export function useUpdateEventMutation() {
+  return Urql.useMutation<UpdateEventMutation, UpdateEventMutationVariables>(UpdateEventDocument);
+};
 export const EventsDocument = gql`
     query Events {
   events {
-    id
-    title
-    description
-    location
-    datetime
-    hostId
-    host {
-      id
-      username
-      email
-      createdAt
-      updatedAt
-    }
-    points
-    createdAt
-    updatedAt
+    ...RegularEvent
   }
 }
-    `;
+    ${RegularEventFragmentDoc}`;
 
 export function useEventsQuery(options: Omit<Urql.UseQueryArgs<EventsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<EventsQuery>({ query: EventsDocument, ...options });
